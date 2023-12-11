@@ -1,0 +1,66 @@
+#include <stdio.h>
+int classificaSalario(float salario, int *contadorAbaixo, int *contadorAcima) {
+  int check;
+  if (salario < 1400) {
+    check = 0;
+    (*contadorAbaixo)++;
+  } else if (salario == 1400) {
+    check = 1;
+  } else {
+    check = 2;
+    (*contadorAcima)++;
+  }
+  return check;
+}
+void mostraClassificacao(int check) {
+  if (check == 0) {
+    printf("Seu salário está abaixo do salário mínimo\n");
+  } else if (check == 1) {
+    printf("Seu salário é igual ao salário mínimo\n");
+  } else if (check == 2) {
+    printf("Seu salário está acima do salário mínimo\n");
+  }
+}
+void mostraSexo(char sexo) {
+  if (sexo == 'm') {
+    printf("Sexo: Masculino\n");
+  } else if (sexo == 'f') {
+    printf("Sexo: Feminino\n");
+  }
+}
+int main() {
+  char sexo;
+  float salario;
+  int contadorMasculino = 0;
+  int contadorFeminino = 0;
+  int contadorAbaixo = 0;
+  int contadorAcima = 0;
+  int *pContadorAbaixo = &contadorAbaixo;
+  int *pContadorAcima = &contadorAcima;
+  do {
+    printf("Insira seu sexo (m ou f): ");
+    scanf(" %c", &sexo);
+    if (sexo == 'm' || sexo == 'f') {
+      printf("Insira seu salario: ");
+      scanf("%f", &salario);
+      if (salario < 1) {
+        printf("Valor inválido. O salário deve ser pelo menos 1 real.\n");
+      } else {
+        int check = classificaSalario(salario, pContadorAbaixo, pContadorAcima);
+        mostraClassificacao(check);
+        if (sexo == 'm') {
+          contadorMasculino++;
+        } else if (sexo == 'f') {
+          contadorFeminino++;
+        }
+        mostraSexo(sexo);
+        printf("Salario: %.2f\n", salario);
+      }
+    }
+  } while ((sexo == 'm' || sexo == 'f') && salario > 1);
+  printf("Número de pessoas masculinas: %d\n", contadorMasculino);
+  printf("Número de pessoas femininas: %d\n", contadorFeminino);
+  printf("Número de assalariados abaixo do salário mínimo: %d\n", contadorAbaixo);
+  printf("Número de assalariados acima do salário mínimo: %d\n", contadorAcima);
+  return 0;
+}
