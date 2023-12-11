@@ -1,0 +1,33 @@
+#include <stdio.h>
+int validaQuantidade(int peca){
+  int adicional = 0;
+  if(peca > 50 && peca <= 80){
+    adicional = (peca - 50) * 0.50;
+  } else if (peca > 80){
+    int quant = peca - 80;
+    adicional = 30 * 0.50 + quant * 0.75;
+  }
+  return adicional;
+}
+float calculaSalario(int peca){
+  float salario = 600;
+  int adicional = validaQuantidade(peca);
+  salario += adicional;
+  return salario;
+}
+void mostraFinal(float salario){
+  printf("O valor do seu salario é de: %.2f\n", salario);
+}
+int main(){
+  int peca;
+  char resposta;
+  do {
+    printf("Insira a Quantidade de peças vendidas: ");
+    scanf("%d", &peca);
+    float salario = calculaSalario(peca);
+    mostraFinal(salario);
+    printf("Deseja refazer a pergunta? (s para sim, qualquer outra tecla para sair): ");
+    scanf(" %c", &resposta);
+  } while (resposta == 's' || resposta == 'S');
+  return 0;
+}
